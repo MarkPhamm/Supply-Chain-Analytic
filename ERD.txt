@@ -1,0 +1,57 @@
+# Modify this code to update the DB schema diagram.
+# To reset the sample schema, replace everything with
+# two dots ('..' - without quotes).
+
+dim_customer
+---
+customer_country FK
+customer_market
+customer_region
+
+dim_product as p # Table documentation comment 2
+------------
+product_name PK int 
+product_category string,
+product_department string,
+warehouse_order_fulfillment_days int
+
+dim_shipment
+----
+shipment_mode PK
+shipment_days_scheduled
+
+dim_date as d
+----
+date date PK
+year INT
+quarter INT
+month INT
+month_name VARCHAR(20)
+month_abbreviation VARCHAR(3)
+day INT
+day_of_week INT
+day_name VARCHAR(20)
+day_abbreviation VARCHAR(3)
+week INT
+is_weekend BOOLEAN
+is_holiday BOOLEAN
+fiscal_year INT
+fiscal_quarter INT
+fiscal_month INT
+is_last_day_of_month BOOLEAN
+is_last_day_of_quarter BOOLEAN
+is_last_day_of_year BOOLEAN
+
+fact_orders as ol
+----
+order_id
+order_date FK >- dim_date.date
+order_time
+order_quantity
+product_name FK >- dim_product.product_name
+customer_country FK >- dim_customer.customer_country
+shipment_date FK >- dim_date.date
+shipment_mode  FK >- dim_shipment.shipment_mode
+gross_sales
+discount_percent
+profit
