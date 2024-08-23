@@ -45,22 +45,22 @@ ORDER BY 2;
 
 SELECT 
     order_id,
-    CAST(
-        CONCAT(order_year, '-', order_month, '-', order_day) AS DATE
-    ) AS order_date,
+    CAST(CONCAT(order_year, '-', order_month, '-', order_day) AS DATE) AS order_date,
     order_time,
     order_quantity,
     product_name, 
     customer_country,
-    CAST(
-        CONCAT(shipment_year, '-', shipment_month, '-', shipment_day) AS DATE
-    ) AS shipment_date,
+    CAST(CONCAT(shipment_year, '-', shipment_month, '-', shipment_day) AS DATE) AS shipment_date,
     shipment_mode,
     gross_sales,
-    discount_percent,
+    CAST(
+        CASE 
+            WHEN discount_percent = '  -  ' THEN '0'
+            ELSE discount_percent
+        END AS FLOAT
+    ) AS discount_percent,
     profit
 FROM 
     SUPPLY_CHAIN_ANALYTICS.original.orders;
-
 -- ORDER BY order_date
 
